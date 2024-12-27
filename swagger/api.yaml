@@ -1,0 +1,238 @@
+openapi: 3.0.3
+info:
+  title: Swagger Petstore - OpenAPI 3.0
+  description: This Documentaton is done my asd
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+
+servers:
+  - url: http://localhost:4000/
+    description: This is local Server
+  - url: http://company.com
+    description:  ths is company website
+
+paths:
+  /api/name:
+    get:
+      summary: Thi is first
+      description:  Our first Api
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Not found
+        500:
+          description: Server Error
+  /api/name1:
+    get:
+      summary: Thi is first
+      description:  Our first Api
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Not found
+        500:
+          description: Server Error
+  /api/user:
+    get:
+      summary: The the Objec of user
+      description: This api will return the User object
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: "integer"
+                  name:
+                    type: "string"
+        '404':
+         description: Not found 
+        "500":
+          description: Server error
+  
+  /api/userlist:
+    get:
+      summary: List of user
+      description: This api will return the users list
+      responses:
+        '200':
+          description: success
+          content:
+           application/json:
+              schema:
+                  type: array
+                  items:
+                      type:  object
+                      properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+        '404':
+          description: Records Not found
+        "500":
+          description: Server Error
+
+  /api/user/{id}:
+    get:
+      summary: Get a singple User
+      description:  This api will return singple user from db
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer       
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                          type:  string
+        '404':
+          description: Record Not found
+        '500':
+          description: Server Error
+
+  # /api/user/:
+  #   post:
+  #     summary: POSt API requs
+  #     requestBody:
+  #       description: User object
+  #       required: true
+  #       content:
+  #         application/json:
+  #            schema:
+  #               type: object
+  #               properties:
+  #                 id:
+  #                   type: integer
+  #                 name:
+  #                     type: string
+  #     responses:
+  #      201:
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: object
+  #               properties:
+  #                 id:
+  #                   type: integer
+  #                 name:
+  #                   type: string
+  #      '404':
+  #         description: Not found
+  #      "500":
+  #          description: Server Error
+
+  /api/user/:
+    post:
+      summary: POST API request to add a new user
+      requestBody:
+        description: User object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+        '404':
+          description: Not found
+        '500':
+          description: Server Error
+ 
+ 
+  /api/userQuery/:
+    get:
+      summary: Get value from query
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+            enum: [1,3,5]
+        - in: query
+          name: age
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Not found
+        '500':
+          description: Server error
+
+  /api/userQuey/:
+    get:
+      summary: Query 
+      parameters:
+        - in: query
+          name: d
+          schema:
+            type: integer
+      responses:
+       "200":
+        description: Success
+
+  /api/fileupload:
+    post:
+      summary: Upload a file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                id:
+                  type: integer
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+        '500':
+          description: Server error
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
